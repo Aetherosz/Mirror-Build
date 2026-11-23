@@ -5,6 +5,8 @@
 #include "FGConstructionMessageInterface.h"
 #include "FGFactoryConnectionComponent.h"
 #include "FGPipeConnectionComponent.h"
+#include "FGProductionIndicatorInstanceComponent.h"
+#include "Buildables/FGBuildableFactory.h"
 #include "Hologram/FGBuildableHologram.h"
 #include "MirrorCore.h"
 #include "Patching/NativeHookManager.h"
@@ -26,9 +28,15 @@ namespace
 		TInlineComponentArray<UFGColoredInstanceMeshProxy*> Proxies(Actor);
 		for (UFGColoredInstanceMeshProxy* Proxy : Proxies)
 		{
-			if (!Proxy->mBlockInstancing)
+			// The production light keeps writing to its instance, so taking it out crashes the game. It stays instanced.
+			if (!Proxy->mBlockInstancing && !Proxy->IsA<UFGProductionIndicatorInstanceComponent>())
 			{
 				Proxy->mBlockInstancing = true;
+				// After BeginPlay it's already in the shared instances: take it out again.
+				if (Proxy->mInstanceHandle.IsInstanced())
+				{
+					Proxy->SetInstanced(false);
+				}
 				// It skipped its render state while it expected to be instanced.
 				Proxy->RecreateRenderState_Concurrent();
 				++Changed;
@@ -70,6 +78,11 @@ namespace
 		const bool bBlueprintWorld = GetNameSafe(Actor->GetWorld()).Contains(TEXT("Blueprint"));
 		if ((bMirrored || bBlueprintWorld) && MirrorCore::CanMirror(Actor->GetClass()))
 		{
+			// The components-registered event doesn't reach built or loaded machines in the game; this one does.
+			if (bMirrored)
+			{
+				DrawOnItsOwn(Actor);
+			}
 			UE_LOG(LogMirrorBuild, Display, TEXT("Spawned %s in %s: scale=%s rotation=%s"),
 				*Actor->GetName(), *GetNameSafe(Actor->GetWorld()),
 				*Actor->GetActorScale3D().ToCompactString(), *Actor->GetActorRotation().ToCompactString());
@@ -127,6 +140,17 @@ namespace
 void FMirrorHooks::Register()
 {
 	FWorldDelegates::OnPostWorldInitialization.AddStatic(&OnWorldInitialized);
+
+	// A newly built machine gets its mesh parts after the spawn event, so it's also caught here,
+	// before its parts start up (loaded machines are already handled at spawn).
+	SUBSCRIBE_METHOD_VIRTUAL(AFGBuildableFactory::BeginPlay, GetMutableDefault<AFGBuildableFactory>(),
+		[](auto& Scope, AFGBuildableFactory* Self)
+		{
+			if (Self && MirrorCore::IsMirrored(Self) && MirrorCore::CanMirror(Self->GetClass()))
+			{
+				DrawOnItsOwn(Self);
+			}
+		});
 
 	AFGBuildableHologram* Sample = GetMutableDefault<AFGBuildableHologram>();
 

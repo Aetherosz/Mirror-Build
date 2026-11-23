@@ -2,6 +2,7 @@
 
 #include "MirrorHooks.h"
 #include "MirrorInput.h"
+#include "MirrorInstances.h"
 #include "MirrorLabels.h"
 
 void FMirrorBuildModule::StartupModule()
@@ -11,6 +12,7 @@ void FMirrorBuildModule::StartupModule()
 	FMirrorHooks::Register();
 	FMirrorInput::Register();
 	MirrorLabels::Register();
+	MirrorInstances::Register();
 #endif
 }
 

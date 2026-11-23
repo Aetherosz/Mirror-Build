@@ -26,7 +26,8 @@ public class MirrorBuild : ModuleRules
 			"Foliage",
 			"NetCore",
 			"GameplayTags",
-			"Json", "JsonUtilities"
+			"Json", "JsonUtilities",
+			"AbstractInstance"
 		});
 
 		// Header stubs
