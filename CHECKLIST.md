@@ -1,0 +1,29 @@
+# Mirror Build 0.3.1: in-game test
+
+**Use a test save.** Keep AutoLink off (it crashes on pipe junctions).
+
+**Key: L** while holding a building with an input or output: production, extractors, generators, storage, truck and drone stations, and modded machines of those kinds. Belts, pipes, logistics, poles, walls, decor, freight platforms and the special buildings (Space Elevator, AWESOME Sink, Portal, gift tree) ignore it.
+
+**Do not blueprint mirrored buildings yet. They come out back to front.**
+
+New in 0.3: the text on mirrored buildings reads the right way round. That covers the FICSIT logos and the words made of letters, like SM3LT3R-700, PAC-IT and CON-STRUCT-0R 01.
+
+1. **Text:** mirror a Smelter, Constructor, Packager, Foundry, Coal Generator, Biomass Burner and Refinery. Logos and words read normally. Check the lit words aren't darker than on a normal one. Put a plain one beside each and check nothing changed on it.
+2. **Build animation:** watch the text while one builds and while one is dismantled. It should animate like the rest of the building.
+3. **Machines:** mirror an Assembler, Blender and Manufacturer. Flipped, inputs still at the input end, items and fluid move.
+4. **Generator:** mirror a Coal Generator. Fuel, water and power work.
+5. **Miner:** mirror a Mk.1 on a node. Build a second one straight after and check it faces the same way. Then upgrade the first to Mk.2: it must stay mirrored, facing the same way, still feeding its belt.
+6. **Extractors:** Water Extractor and Oil Extractor. They place and produce.
+7. **Storage:** stack a mirrored container on a normal one. Inputs above inputs. Fluid Buffer connects.
+8. **Truck Station:** a vehicle docks, loads and unloads.
+9. **Drone Port:** ports stay on their side, swapped along it. A drone lands and unloads.
+10. **Leave alone:** L does nothing while holding a freight platform, Space Elevator, AWESOME Sink, splitter, belt, pipe, pump, power pole or wall.
+11. **Save and reload:** everything above is still mirrored, readable and working.
+
+0.3.1: mirrored Foundry, Coal Generator and other instanced machines were dark (0.1 to 0.3). They now draw on their own, like the Refinery. Check a mirrored Foundry and Coal Generator look as bright as plain ones, with global illumination on and off, in a fresh build and after loading the save.
+
+Known: holograms look darker while mirrored (cosmetic, not looked into yet). One small dark spot on one logo of a mirrored Converter.
+
+Afterwards, or after a crash, keep `%LOCALAPPDATA%\FactoryGame\Saved\Logs\FactoryGame.log`.
+
+Not covered: multiplayer, dedicated servers, removing the mod for buildings other than the Refinery.

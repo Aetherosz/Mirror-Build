@@ -1,0 +1,30 @@
+{
+	"FileVersion": 3,
+	"Version": 0,
+	"VersionName": "0.3.1",
+	"SemVersion": "0.3.1",
+	"GameVersion": ">=520140",
+	"FriendlyName": "Mirror Build (prototype)",
+	"Description": "Prototype: press L while placing a building with inputs or outputs to mirror it, ports included. Blueprints lose the mirror. Use on a copy of a save.",
+	"Category": "Modding",
+	"CreatedBy": "Aetherosz",
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"RequiredOnRemote": true,
+	"Modules": [
+		{
+			"Name": "MirrorBuild",
+			"Type": "Runtime",
+			"LoadingPhase": "PostDefault"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "SML",
+			"Enabled": true,
+			"SemVersion": "^3.12.1"
+		}
+	]
+}
