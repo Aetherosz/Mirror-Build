@@ -1,10 +1,8 @@
-# Mirror Build 0.3.1: in-game test
+# Mirror Build 0.3.6: in-game test
 
-**Use a test save.** Keep AutoLink off (it crashes on pipe junctions).
+**Use a test save.** Keep AutoLink off (see Known).
 
 **Key: L** while holding a building with an input or output: production, extractors, generators, storage, truck and drone stations, and modded machines of those kinds. Belts, pipes, logistics, poles, walls, decor, freight platforms and the special buildings (Space Elevator, AWESOME Sink, Portal, gift tree) ignore it.
-
-**Do not blueprint mirrored buildings yet. They come out back to front.**
 
 New in 0.3: the text on mirrored buildings reads the right way round. That covers the FICSIT logos and the words made of letters, like SM3LT3R-700, PAC-IT and CON-STRUCT-0R 01.
 
@@ -19,10 +17,22 @@ New in 0.3: the text on mirrored buildings reads the right way round. That cover
 9. **Drone Port:** ports stay on their side, swapped along it. A drone lands and unloads.
 10. **Leave alone:** L does nothing while holding a freight platform, Space Elevator, AWESOME Sink, splitter, belt, pipe, pump, power pole or wall.
 11. **Save and reload:** everything above is still mirrored, readable and working.
+12. **Blueprints (new in 0.3.6):** in a Blueprint Designer, build a mirrored Assembler, a mirrored Refinery and a mirrored Coal Generator, each with a plain one beside it and belts or pipes between them. Save the blueprint. A file `<name>.sbpmirror` appears next to its `.sbp`.
+    - Place the blueprint, turned a different way than the designer. Mirrored ones come out mirrored (ports and text as in the designer), plain ones plain, belts and pipes still connected, items and fluid flow.
+    - Look at the hologram before placing. Note whether the mirrored ones already show mirrored there.
+    - Load the blueprint back into an empty designer: the mirrors stay.
+    - Save it again with nothing mirrored: the `.sbpmirror` file goes away.
+    - Blueprints saved before 0.3.6 have no `.sbpmirror` and still come out back to front. Save them again from a designer.
 
 0.3.1: mirrored Foundry, Coal Generator and other instanced machines were dark (0.1 to 0.3). They now draw on their own, like the Refinery. Check a mirrored Foundry and Coal Generator look as bright as plain ones, with global illumination on and off, in a fresh build and after loading the save.
 
-Known: holograms look darker while mirrored (cosmetic, not looked into yet). One small dark spot on one logo of a mirrored Converter.
+0.3.5: mirrored machines' meshes are taken out of shared instancing, legs and feet drawn as plain meshes.
+
+Known:
+- Holograms look darker while mirrored. This is a known lighting bug, not a feature: there is no quick fix, so it is left in for now. A side effect is that you can tell at a glance when a hologram is mirrored.
+- One small dark spot on one logo of a mirrored Converter.
+- AutoLink crashes on pipe junctions (believed to be an AutoLink issue; AutoLink is unmaintained). Not yet confirmed with Mirror Build removed. Keep it off while testing.
+- Multiplayer: the `.sbpmirror` file only exists on the PC that saved the blueprint. Blueprints downloaded from the host may preview unmirrored on clients.
 
 Afterwards, or after a crash, keep `%LOCALAPPDATA%\FactoryGame\Saved\Logs\FactoryGame.log`.
 

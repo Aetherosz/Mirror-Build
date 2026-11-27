@@ -1,5 +1,6 @@
 #include "MirrorBuildModule.h"
 
+#include "MirrorBlueprints.h"
 #include "MirrorHooks.h"
 #include "MirrorInput.h"
 #include "MirrorInstances.h"
@@ -13,6 +14,7 @@ void FMirrorBuildModule::StartupModule()
 	FMirrorInput::Register();
 	MirrorLabels::Register();
 	MirrorInstances::Register();
+	MirrorBlueprints::Register();
 #endif
 }
 
